@@ -1,13 +1,12 @@
 package com.neonets.Book.user;
 
+import com.neonets.Book.Security.token.Token;
 import com.neonets.Book.role.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.IdGeneratorType;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -36,8 +35,15 @@ public class User{
     @ManyToMany(
             fetch = FetchType.EAGER
     )
-
+    @JoinTable(
+            name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
     private List<Role> roles;
+
+    @OneToMany
+    private List<Token> tokens;
 
     //Account information
     @CreatedDate
