@@ -1,4 +1,4 @@
-package com.neonets.Book.Security.token;
+package com.neonets.Book.Security.jwt;
 
 import com.neonets.Book.user.User;
 import jakarta.persistence.*;

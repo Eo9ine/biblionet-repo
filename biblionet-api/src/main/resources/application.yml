@@ -9,3 +9,7 @@ springdoc:
 server:
   servlet:
     context-path: /api/v1/
+
+application:
+  SECRET_KEY: thisIsMySHA2KeyToSignIn
+  EXPIRATION_TIME: 5400000

@@ -1,4 +1,4 @@
-package com.neonets.Book.Security.token;
+package com.neonets.Book.Security.jwt;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

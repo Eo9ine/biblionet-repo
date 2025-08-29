@@ -1,6 +1,6 @@
 package com.neonets.Book.user;
 
-import com.neonets.Book.Security.token.Token;
+import com.neonets.Book.Security.jwt.Token;
 import com.neonets.Book.role.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,7 +24,7 @@ public class User{
     //User information attributes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long userId;
     private String firstName;
     private String lastName;
     @Column(unique = true)
