@@ -27,6 +27,8 @@ public class TokenFilter extends OncePerRequestFilter {
     private TokenHelperService jwtUtil;
     private CustomUserDetailsService userDetailsService;
 
+
+
     private final Logger logger = LoggerFactory.getLogger(TokenFilter.class);
 
     @Override
@@ -54,10 +56,10 @@ public class TokenFilter extends OncePerRequestFilter {
 
     private String extractJwtFromRequest(HttpServletRequest request)
     {
-
+        final String BEARER_STRING = "Bearer ";
         String jwtBearer = request.getHeader("Authorization");
         logger.debug("authorization header: {}", jwtBearer);
-        if(jwtBearer != null && jwtBearer.startsWith("Bearer "))
+        if(jwtBearer != null && jwtBearer.startsWith(BEARER_STRING))
         {
             return jwtBearer.substring(7);
         }
