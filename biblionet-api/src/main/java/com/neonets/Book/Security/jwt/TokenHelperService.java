@@ -1,9 +1,7 @@
 package com.neonets.Book.Security.jwt;
 
 import com.neonets.Book.Security.CustomUserDetails;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +31,7 @@ public class TokenHelperService {
         return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
     }
 
+
     public String generateJjwt(CustomUserDetails customUserDetails, Map<String, Object> claims) {
         String username = customUserDetails.getUsername();
         return Jwts.builder()
@@ -43,6 +42,8 @@ public class TokenHelperService {
                 .signWith(signatureKey())
                 .compact();
     }
+
+
 
 
     public Jws<Claims> parseJjwt(String token)
@@ -60,9 +61,30 @@ public class TokenHelperService {
 
     public Boolean  validateTokenExpiration(String token)
     {
-        Date expiration = parseJjwt(token).getPayload().getExpiration();
+        try
+        {
+            Date expiration = parseJjwt(token).getPayload().getExpiration();
 
-        return  !expiration.before(new Date());
+            return  !expiration.before(new Date());
+        }
+        catch(MalformedJwtException e)
+        {
+            logger.error("Invalid JWT token: {}", e.getMessage());
+        }
+        catch(ExpiredJwtException e)
+        {
+            logger.error("JWT token is expired: {}", e.getMessage());
+        }
+        catch(UnsupportedJwtException e)
+        {
+            logger.error("JWT token is unsupported: {}", e.getMessage());
+        }
+        catch(IllegalArgumentException e)
+        {
+            logger.error("JWT claims string is empty: {}", e.getMessage());
+        }
+
+        return false;
     }
 
 }
